@@ -1,0 +1,52 @@
+step1: Ray
+step2: Filter
+step3: prodigal
+step4: blastp,pfam
+step4: diamond
+step5: exe("sh /vol/cluster/huanglr/myrun.sh")
+step6: MEGAN
+
+
+step1 Ray{
+	
+	input.file.1=fastq.1.gz
+	input.file.2=fastq=2.gz
+	input.file.3=fastq.*.gz		//wildcard, follow the rule of bash wildcard match
+
+	parameter.1= -k 31 
+	parameter.2= -i
+
+	dependency.1=mpiexec
+	dependency.2=export /vol/cluster-data/huanglr/JAVA &&
+
+	tool.ray=/vol/cluster-data/huanglr/bin/Ray
+
+	output.dir=RayOutput				//output file name or dir name
+
+	exe=dependency.tool.parameter.input.output
+	exe=dependency.tool.parameter.input.output
+
+	parallel=dependency+tool+parameter+input.1+output
+	parallel=dependency + tool + parameter * input.file.3 + output
+//	parallel*input.3=dependency+tool+parameter+input.3
+
+
+	scheduler=sge					//
+	cpu=8
+	memory=50G					// memory per node
+	schedule.type=batch				//batch or array
+	maxjob=100
+	timeout=1h
+	split.fasta.chunk=5000				//
+	split.fasta.line=5000  				// 5000/2 chunks
+	split.fastq.chunk=5000				//
+	split.bam.line=10000				//
+}
+
+step2 Blastp{
+
+	input=scaffold.fa
+	parameter= 
+	out=scaffold
+
+}

@@ -1,0 +1,8 @@
+Function: assembly
+fq: project/step0/
+T-------- Input --------T
+|                       |
+| Ray                   |
+|                       |
+|________ Output________|
+        dir: project/step1/Ray/

@@ -1,0 +1,34 @@
+step1:  T-------- Input	--------T
+	|			|
+	| Ray			|
+	|			|
+	|________ Output________|
+		project/step1/Ray
+
+step2:  T-------- Input	--------T
+	|			|
+	| Filter		|
+	|			|
+	|________ Output________| 
+		project/step2/Filter
+
+step3:  T-------- Input --------T
+        |                       |
+        | Prodigal     	        |
+        |                       |
+        |________ Output________| 
+		project/step3/Prodigal
+
+step4:  T-------- Input --------T      T-------- Input --------T
+        |                       |      |		       |
+        | Blastp                |      | Pfam		       |
+        |                       |      |		       |
+        |________ Output________|      |________ Output________|
+		project/step4/Blastp       /project/step4/Pfam
+
+step5:  T-------- Input --------T
+        |                       |
+        | MEGAN                 |
+        |                       |
+        |________ Output________|
+		project/step5/MEGAN

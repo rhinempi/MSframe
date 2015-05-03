@@ -1,0 +1,14 @@
+module Ray{
+
+        input.1=-i fastq.1.gz
+        input.2=-i fastq\=2.gz
+        parameter.1= -k 31
+        dependency=mpiexec
+        output=                 \\output file name or dir name
+
+        exe=dependency.tool.parameter.input.output
+        parallel=dependency.tool.parameter.input.output
+        cpu=8
+        memory=50G              \\ memory per node
+
+}
