@@ -1,0 +1,200 @@
+#! /usr/bin/env perl
+
+=pod
+
+=head1 NAME
+
+msframe (Modulated Scalable framework)
+
+=head1 SYNOPSIS
+
+msframe run -conf pipe.config [-parameters]
+
+msframe list -all
+
+msframe pipeline -conf pipe.config
+
+msframe view -conf Ray.ms
+
+msframe status
+
+msframe import -m Ray.ms
+
+msframe export -m Ray -o Ray.ms
+
+=head1 DESCRIPTION
+
+To build a flexible and scalable pipeline
+
+=head1 CONFIGURATION
+
+A text file specify correspond resourse comsumption
+
+=head1 OPTIONS
+
+run - run a pipeline
+
+list - list all modules
+
+pipeline - should a pipeline
+
+view - view the configuration of a module
+
+status - check the status of all pipeline project
+
+import - import a module
+
+export - export a module to a configure file
+
+
+=over
+
+=item -conf FILE
+
+Configuration file.
+
+=back
+
+=head1 AUTHOR
+
+Liren Huang L<huanglr@cebitec.uni-bielefeld.de>
+
+=head1 VERSION
+
+version 0.1
+
+=head1 LICENSE & COPYRIGHT
+
+Copyright 2015 Liren Huang, all rights reserved. (I 
+have no idae what that means.)
+
+LICENSE
+
+=over
+
+=item ITEMS
+
+	To be continue ...
+
+=back
+
+=cut
+
+
+
+use strict;
+use warnings;
+use FindBin qw($Bin);
+use Pod::Usage;
+
+# ---------------------------------------------	#
+#						#
+# recieve parameters				#
+#						#
+# ---------------------------------------------	#
+my @parameter= @ARGV;
+my $call=$parameter[0];
+
+# --------------------------------------------- #
+#						#
+# Checking whether to download dependencies	#
+#					or not	#
+# --------------------------------------------- #
+unless (-e "$Bin/MSframe/bin/main"){
+
+	INFO("Initiating MSframe ...");
+	INFO("Going to download MSframe dependencies");
+	INFO("100Mb space require, download? [Y/N]:");
+
+	START:
+	my $download = <STDIN>;
+	if ($download =~ /Y/){
+		Download();
+	}elsif ($download =~ /N/){
+		exit 0;
+	}else{
+		INFO("Please enter Y or N");
+		goto START;	# ----- re-enter Yes or No -----#
+	}
+}
+
+# --------------------------------------------- #
+#						#
+# Dump help information				#
+#						#
+# --------------------------------------------- #
+pod2usage(-exit=>1) unless $call;
+pod2usage(-exit=>1) if $call eq "help";
+pod2usage(-verbose=>2) if $call eq "man";
+
+# --------------------------------------------- #
+#                                               #
+# Dump help information                         #
+#                                               #
+# --------------------------------------------- #
+main(@parameter);
+
+# --------------------------------------------- #
+#						#
+# Dump STDOUT information			#
+#						#
+# --------------------------------------------- #
+sub INFO{
+
+	my $info = shift;
+	my $time = localT();
+	print STDOUT "$time: $info\n";
+
+}
+
+# --------------------------------------------- #
+#						#
+# Acquire local time standard			#
+#						#
+# --------------------------------------------- #
+sub localT{
+
+	my (
+		$sec,$min,$hour,
+		$mday,$mon,$year,
+		$wday,$yday,$isdst
+	) = localtime(time());
+	
+	my $format_time = sprintf(
+		"%d-%d-%d %d:%d:%d",
+		$year+1900,$mon+1,
+		$mday,$hour,$min,$sec
+	);
+
+	return $format_time;
+}
+
+# --------------------------------------------- #
+#						#
+# Download MSframe dependencies			#
+#						#
+# --------------------------------------------- #
+sub Download{
+
+	# -------------------------------------	#
+	# Clone from github 			#
+	# ------------------------------------- #
+	my $gitinfo = `git clone https://github.com/rhinempi/MSframe.git`;
+	open OUT,">./MSframe/download.info";	
+	print OUT "$gitinfo";
+	INFO("Downloading MSframe complete");
+
+}
+
+# --------------------------------------------- #
+#						#
+# Run main program				#
+#						#
+# --------------------------------------------- #
+sub main{
+
+	my @params = shift;
+	my $main = "$Bin/bin/main";
+	my $runmain = `$main @params`;
+
+}

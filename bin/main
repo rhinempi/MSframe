@@ -1,0 +1,67 @@
+#! /usr/bin/perl
+
+=pod
+
+=head1 NAME
+
+main: main program of MSframe
+
+=head1 SYNOPSIS
+
+main->run(%parameter);
+
+=head1 DESCRIPTION
+
+This is the main program of MSframe
+
+=head1 VERSION
+
+Version 0.1
+
+=cut
+
+
+
+use strict;
+use warnings;
+use FindBin qw($Bin);
+use lib "$Bin";
+
+#use usage;
+
+my %parameter=();
+GetOptions(
+	\%parameter,
+
+	# main command
+	'run=s',
+	'list=s',
+	'implement=s',
+	'pipeline=s',
+	
+	'help',
+	'version',
+
+	# parameters for running a pipeline
+	'c|config=s',
+);
+
+sub run {
+
+	my \@parameter = shift;
+
+	# -------
+	# usage: parameters for run a pipeline
+	# -------
+        if ($parameter->{'help'} || $parameter->{'h'}){
+#		usage('usage_run');
+	}
+	
+#	if ($parameter->{'config'} || $parameter->{'c'}){
+#		readconfig()}
+#	if ($parameter->{''})
+
+}
+
+
+1;
