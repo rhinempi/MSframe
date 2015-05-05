@@ -1,0 +1,38 @@
+#! /usr/bin/perl
+#
+use strict;
+use warnings;
+
+my $file=shift;
+
+open OUT,">$file.pm";
+
+print OUT"
+package $file;
+
+=pod
+
+=head1 NAME
+
+$file
+
+=head1 SYNOPSIS
+
+ $file->
+
+=head1 DESCRIPTION
+
+$file package of MSframe
+
+=head1 VERSION
+
+Version 0.1
+
+=cut
+
+use strict;
+use warnings;
+use FindBin qw(\$Bin);
+use lib \"\$Bin\";
+
+";

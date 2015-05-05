@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
 
 =pod
 
@@ -8,7 +8,23 @@ main: main program of MSframe
 
 =head1 SYNOPSIS
 
-main->run(%parameter);
+main run -conf pipe.config [-parameters]
+
+main list -all
+
+main pipeline -conf pipe.config
+
+main view -conf Ray.ms
+
+main status -all
+
+main import -module Ray.ms
+
+main export -module Ray -outdir Ray.ms
+
+main install -cluster Spark
+
+main kill -project JGI_metagenomics
 
 =head1 DESCRIPTION
 
@@ -18,50 +34,135 @@ This is the main program of MSframe
 
 Version 0.1
 
+=head1 AUTHOR
+
+Liren Huang L<huanglr@cebitec.uni-bielefeld.de>
+
+=head1 LICENSE & COPYRIGHT
+
+Copyright 2015 Liren Huang, all rights reserved. (I
+have no idae what that means.)
+
+LICENSE
+
 =cut
 
 
-
+# ------------------------------------------------------------- #
+#                                                               #
+# import build-in function                                      #
+#                                                               #
+# ------------------------------------------------------------- #
 use strict;
 use warnings;
 use FindBin qw($Bin);
-use lib "$Bin";
+use Pod::Usage;
+use Getopt::Long;
+use lib "$Bin/../lib";
 
-#use usage;
 
+# ------------------------------------------------------------- #
+#                                                               #
+# import libraries dependencies                                 #
+#                                                               #
+# ------------------------------------------------------------- #
+use command::Run::run;
+use command::List::list;
+use command::Pipeline::pipeline;
+use command::View::view;
+use command::Status::status;
+use command::Import::import;
+use command::Export::export;
+
+use common::Time::localt;
+use common::Info::info;
+use common::Log::logging;
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# recieve parameters                                            #
+#                                                               #
+# ------------------------------------------------------------- #
+my $call = shift; # ----- main command ----- #
 my %parameter=();
 GetOptions(
 	\%parameter,
 
-	# main command
+	# ----- main command ----- #
 	'run=s',
 	'list=s',
-	'implement=s',
 	'pipeline=s',
+	'view=s',
+	'status=s',
+	'import=s',
+	'export=s',
+	'install=s',
+	'kill=s',
 	
 	'help',
 	'version',
+	'man',
 
-	# parameters for running a pipeline
-	'c|config=s',
+	# ----- parameters for running a pipeline -----#
+	'conf=s',
+	'outdir=s',
+	'help',
 );
 
-sub run {
 
-	my \@parameter = shift;
-
-	# -------
-	# usage: parameters for run a pipeline
-	# -------
-        if ($parameter->{'help'} || $parameter->{'h'}){
-#		usage('usage_run');
-	}
-	
-#	if ($parameter->{'config'} || $parameter->{'c'}){
-#		readconfig()}
-#	if ($parameter->{''})
-
-}
+# ------------------------------------------------------------- #
+#                                                               #
+# Dump help information                                         #
+#                                                               #
+# ------------------------------------------------------------- #
 
 
-1;
+
+# ------------------------------------------------------------- #
+#                                                               #
+# run an assembled pipeline                                     #
+#                                                               #
+# ------------------------------------------------------------- #
+run->params(\%parameter) if $call eq "run";
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# run an assembled pipeline                                     #
+#                                                               #
+# ------------------------------------------------------------- #
+list->params(%parameter) if $call eq "list";
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# run an assembled pipeline                                     #
+#                                                               #
+# ------------------------------------------------------------- #
+pipeline->params(%parameter) if $call eq "pipeline";
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# run an assembled pipeline                                     #
+#                                                               #
+# ------------------------------------------------------------- #
+view->params(%parameter) if $call eq "view";
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# Acquire local time standard                                   #
+#                                                               #
+# ------------------------------------------------------------- #
+my $time = localt->localT();
+
+
+# ------------------------------------------------------------- #
+#                                                               #
+# Dump STDOUT information                                       #
+#                                                               #
+# ------------------------------------------------------------- #
+# info->INFO("");
+
