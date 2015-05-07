@@ -7,6 +7,7 @@ use threads;
 my @line = ("foo","bar","I","have","no","idea");
 my $as;
 
+my $l;
 foreach my $line (@line){
 	$line = async {
  		sleep 10;
@@ -14,13 +15,15 @@ foreach my $line (@line){
 		open OUT,">./$line.txt";
 		print OUT"$line\n";
 		print "$line\n";
-		my $test = async {sleep 5;}; 
-		$test->join();
+		$line="shit";
+#		my $test = async {sleep 5;}; 
+#		$test->join();
 		return 0;
 	};
-#	$line->detach() if $line eq "I";
+#	$line->join();
 }
 
+#$l->join();
 foreach my $line (@line){
 	$line->join() unless $line eq "I";
 } 

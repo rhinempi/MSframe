@@ -35,6 +35,7 @@ msframe run -conf metagenomics.cfg
 Usage:
   -conf         configuration file
   -outdir       output directory
+  -project	project name of a pipeline run
 
 USAGE
 
